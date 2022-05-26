@@ -3,6 +3,8 @@ package entidades;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -17,6 +19,7 @@ public class Carrera {
 	private int idCarrera;
 	private String nombre;
 	@OneToMany(mappedBy = "carrera", fetch= FetchType.EAGER)
+	@JsonBackReference
     private List<CarreraEstudiante> carreraEstudiante;
 	
 	public Carrera() {}

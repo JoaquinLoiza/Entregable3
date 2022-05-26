@@ -49,10 +49,16 @@ public class CarreraEstudianteRest extends HttpServlet{
 			}
 	}
 	
-	@GET
+	/*@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<Carrera> getCarrerasInscriptos() {
 		return CarreraEstudianteDao.getInstance().getCarrerasInscriptos();
+	}*/
+	
+	@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<CarreraEstudiante> getAll() {
+		return CarreraEstudianteDao.getInstance().findAll();
 	}
 	
 	public class RecursoDuplicado extends WebApplicationException {

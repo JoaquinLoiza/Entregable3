@@ -2,6 +2,9 @@ package entidades;
 
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
@@ -17,7 +20,8 @@ public class Estudiante {
 	private String ciudad;
 	private int nroLibreta;
 	@OneToMany(mappedBy = "estudiante") // Referencia al atributo de la entidad CarreraEstudiante
-    private Set<CarreraEstudiante> carreraEstudiante;
+    @JsonBackReference
+	private Set<CarreraEstudiante> carreraEstudiante;
 	
 	public Estudiante() {
 	}

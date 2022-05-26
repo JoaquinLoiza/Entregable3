@@ -46,8 +46,13 @@ public class CarreraEstudianteDao implements DAO<CarreraEstudiante, Integer> {
 
 	@Override
 	public List<CarreraEstudiante> findAll() {
-		// TODO Auto-generated method stub
-		return null;
+		EntityManager em = Emf.createEntityManager();
+		em.getTransaction().begin();
+		String jpql = "SELECT ce FROM CarreraEstudiante ce";
+		Query query = em.createQuery(jpql);
+		@SuppressWarnings("unchecked")
+		List<CarreraEstudiante> r = query.getResultList(); 
+		return r;
 	}
 
 	@Override
