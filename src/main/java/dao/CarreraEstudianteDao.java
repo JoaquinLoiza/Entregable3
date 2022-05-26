@@ -1,10 +1,11 @@
 package dao;
 
 
+import java.util.ArrayList;
 import java.util.List;
-
 import entidades.Carrera;
 import entidades.CarreraEstudiante;
+import entidades.Estudiante;
 import entitymanagerfactory.Emf;
 import interfaces.DAO;
 import jakarta.persistence.EntityManager;
@@ -63,6 +64,29 @@ public class CarreraEstudianteDao implements DAO<CarreraEstudiante, Integer> {
 		@SuppressWarnings("unchecked")
 		List<Carrera> r = query.getResultList(); 
 		return r;
+	}
+
+	public ArrayList<Integer> traerAnios(Carrera c) {
+		EntityManager em = Emf.createEntityManager();
+		em.getTransaction().begin();
+		String jpql = "SELECT ce.anioGraduacion FROM CarreraEstudiante ce JOIN ce.estudiante e JOIN ce.carrera c WHERE c.idCarrera = ?1 ORDER BY ce.anioGraduacion ASC";
+		Query query = em.createQuery(jpql);
+		query.setParameter(1, c.getIdCarrera());
+		@SuppressWarnings("unchecked")
+		ArrayList<Integer> e = (ArrayList<Integer>) query.getResultList();
+		return e;
+	}
+
+	public ArrayList<Estudiante> getCantidadGraduadosPorAnio(Integer i, Carrera c) {
+		EntityManager em = Emf.createEntityManager();
+		em.getTransaction().begin();
+		String jpql= "SELECT e FROM CarreraEstudiante ce JOIN ce.carrera c JOIN ce.estudiante e WHERE c.idCarrera = ?1 AND ce.anioGraduacion = ?2 AND ce.graduado = true";
+		Query query = em.createQuery(jpql);
+		query.setParameter(1, c.getIdCarrera());
+		query.setParameter(2, i);
+		@SuppressWarnings("unchecked")
+		ArrayList<Estudiante> e = (ArrayList<Estudiante>) query.getResultList();
+		return e;
 	}
 
 }

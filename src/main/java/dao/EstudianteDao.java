@@ -1,8 +1,10 @@
 package dao;
 
 
+import java.util.ArrayList;
 import java.util.List;
 import jakarta.persistence.Query;
+import entidades.Carrera;
 import entidades.Estudiante;
 import entitymanagerfactory.Emf;
 import interfaces.DAO;
@@ -89,5 +91,16 @@ public class EstudianteDao implements DAO<Estudiante, Integer>{
 	@Override
 	public boolean delete(Integer id) {
 		return false;
+	}
+
+	public ArrayList<Estudiante> getEstudiantesPorCarrera(Carrera c) {
+		EntityManager em = Emf.createEntityManager();
+		em.getTransaction().begin();
+		String jpql = "SELECT e FROM CarreraEstudiante ce JOIN ce.estudiante e JOIN ce.carrera c WHERE c.idCarrera = ?1 ORDER BY e.apellido ASC";
+		Query query = em.createQuery(jpql);
+		query.setParameter(1, c.getIdCarrera());
+		@SuppressWarnings("unchecked")
+		List<Estudiante> resultados = query.getResultList();
+		return (ArrayList<Estudiante>) resultados;
 	}
 }
