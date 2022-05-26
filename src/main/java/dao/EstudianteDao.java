@@ -11,7 +11,7 @@ import jakarta.persistence.EntityManager;
 public class EstudianteDao implements DAO<Estudiante, Integer>{
 	private static EstudianteDao daoEstudiante;
 	
-	public EstudianteDao(){}
+	private EstudianteDao(){}
 	
 	public static EstudianteDao getInstance() {
 		if(daoEstudiante == null) {
@@ -89,16 +89,5 @@ public class EstudianteDao implements DAO<Estudiante, Integer>{
 	@Override
 	public boolean delete(Integer id) {
 		return false;
-	}
-	
-	public boolean encontro(Integer id) {
-		boolean result=false;
-		EntityManager em=Emf.createEntityManager();
-		em.getTransaction().begin();
-		Estudiante c=em.find(Estudiante.class, id);
-		if (c!=null) {
-			result=true;
-		}
-		return result;
 	}
 }

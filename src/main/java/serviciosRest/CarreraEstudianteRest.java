@@ -25,25 +25,25 @@ public class CarreraEstudianteRest extends HttpServlet{
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response createCarreraEstudiante(CarreraEstudiante c) {
-		CarreraDao carrera = new CarreraDao();
-		EstudianteDao est = new EstudianteDao();// tuve que hacerlo publico..Preguntar
-		if (carrera.encontro(c.getCarrera().getIdCarrera()) && est.encontro(c.getEstudiante().getDni())) {
-			CarreraEstudiante result = CarreraEstudianteDao.getInstance().persist(c);
-			if (result == null) {
-				throw new RecursoDuplicado(c.getEstudiante().getDni(), c.getCarrera().getIdCarrera());
-			} else {
-				return Response.status(Response.Status.CONFLICT)
-						.entity("la carrera con el id  " + c.getCarrera().getIdCarrera() + "o el estudiante con el  "
-								+ c.getEstudiante().getDni() + "no existen")
-						.type(MediaType.TEXT_PLAIN).build();
-			}
-		} else {
-			return Response
-					.status(Response.Status.CONFLICT).entity("la carrera con el id  " + c.getCarrera().getIdCarrera()
-							+ "o el estudiante con el  " + c.getEstudiante().getDni() + "no existen")
-					.type(MediaType.TEXT_PLAIN).build();
+		if(CarreraDao.getInstance().findAll().contains(c.getCarrera()) && 
+				EstudianteDao.getInstance().findAll().contains(c.getEstudiante())){
+				CarreraEstudiante result = CarreraEstudianteDao.getInstance().persist(c);
+				
+				if (result == null) {
+					throw new RecursoDuplicado(c.getEstudiante().getDni(), c.getCarrera().getIdCarrera());
+				} else {
+					return Response.status(Response.Status.CONFLICT)
+							.entity("la carrera con el id  " + c.getCarrera().getIdCarrera() + "o el estudiante con el  "
+									+ c.getEstudiante().getDni() + "no existen")
+							.type(MediaType.TEXT_PLAIN).build();
+				}
 		}
-	}
+		else {
+			return Response.status(Response.Status.CONFLICT).entity("la carrera con el id  " + c.getCarrera().getIdCarrera()
+			+ "o el estudiante con el  " + c.getEstudiante().getDni() + "no existen")
+			.type(MediaType.TEXT_PLAIN).build();
+			}
+		}
 	
 	public class RecursoDuplicado extends WebApplicationException {
 

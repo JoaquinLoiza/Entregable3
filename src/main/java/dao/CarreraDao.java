@@ -10,7 +10,7 @@ import jakarta.persistence.EntityManager;
 public class CarreraDao implements DAO<Carrera, Integer>{
 	private static CarreraDao daoCarrera;
 	
-	public CarreraDao(){}
+	private CarreraDao(){}
 	
 	public static CarreraDao getInstance() {
 		if(daoCarrera == null) {
@@ -52,6 +52,7 @@ public class CarreraDao implements DAO<Carrera, Integer>{
 		EntityManager e = Emf.createEntityManager();
 		@SuppressWarnings("unchecked")
 		List<Carrera> list = e.createQuery("SELECT c FROM Carrera c").getResultList();
+		e.close();
 		return list;
 	}
 
@@ -60,17 +61,6 @@ public class CarreraDao implements DAO<Carrera, Integer>{
 	public boolean delete(Integer id) {
 		// TODO Auto-generated method stub
 		return false;
-	}
-	
-	public boolean encontro(Integer id) {
-		boolean result=false;
-		EntityManager em=Emf.createEntityManager();
-		em.getTransaction().begin();
-		Carrera c=em.find(Carrera.class, id);
-		if (c!=null) {
-			result=true;
-		}
-		return result;
 	}
 
 }
