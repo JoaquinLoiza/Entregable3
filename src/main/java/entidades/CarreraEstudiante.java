@@ -1,6 +1,7 @@
 package entidades;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -69,4 +70,20 @@ public class CarreraEstudiante implements Serializable{
 	public Carrera getCarrera() {
 		return carrera;
 	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(anioGraduacion, aniosAntiguedad, carrera, estudiante, graduado);
+	}
+
+	@Override
+	public String toString() {
+		return "CarreraEstudiante [estudiante=" + estudiante + ", carrera=" + carrera + ", graduado=" + graduado
+				+ ", aniosAntiguedad=" + aniosAntiguedad + ", anioGraduacion=" + anioGraduacion + "]";
+	}
+	
+	
+
+	
+	
 }

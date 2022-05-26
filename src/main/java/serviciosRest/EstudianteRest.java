@@ -1,5 +1,6 @@
 package serviciosRest;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import dao.EstudianteDao;
@@ -62,6 +63,20 @@ public class EstudianteRest {
 		}
 		else {
 			throw new RecursoNoExisteGenero(msg);
+		}
+	}
+	
+	@GET
+	@Path("/{idcarrera}/{ciudad}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public ArrayList<Estudiante> getEstudiantesPorCiudadYCarrera(@PathParam("idcarrera") String carrera, @PathParam("ciudad") String ciudad) {
+		int idc = Integer.valueOf(carrera);
+		ArrayList<Estudiante> e = EstudianteDao.getInstance().findByCarreraByCuidad(idc, ciudad);
+		if(e != null) {
+			return e;			
+		}
+		else {
+			throw new RecursoNoExisteLibreta(idc);
 		}
 	}
 	

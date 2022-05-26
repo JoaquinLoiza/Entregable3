@@ -103,4 +103,16 @@ public class EstudianteDao implements DAO<Estudiante, Integer>{
 		List<Estudiante> resultados = query.getResultList();
 		return (ArrayList<Estudiante>) resultados;
 	}
+
+	public ArrayList<Estudiante> findByCarreraByCuidad(int idc, String ciudad) {
+		EntityManager em = Emf.createEntityManager();
+		em.getTransaction().begin();
+		@SuppressWarnings("unchecked")
+		List<Estudiante> result = 
+		em.createQuery("SELECT e FROM CarreraEstudiante ce JOIN ce.carrera c JOIN ce.estudiante e WHERE c.idCarrera = ?1 AND e.ciudad = ?2")
+		.setParameter(1, idc)
+		.setParameter(2, ciudad)
+		.getResultList();
+		return (ArrayList<Estudiante>) result;		
+	}
 }

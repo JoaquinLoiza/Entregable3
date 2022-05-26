@@ -9,6 +9,7 @@ import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response;
 
 @Path("/reporte")
 public class DtoRest extends HttpServlet{
@@ -17,9 +18,9 @@ public class DtoRest extends HttpServlet{
 	
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public ArrayList<Registro> getRegistros(){
+	public Response getRegistros(){
 		DTOdao.getInstance().crearReporte();
-		return DTOdao.getInstance().getRegistros();
+		return Response.status(201).entity(DTOdao.getInstance().getRegistros().toString()).build();
 	}
 
 }

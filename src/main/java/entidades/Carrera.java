@@ -2,6 +2,7 @@ package entidades;
 
 
 import java.util.List;
+import java.util.Objects;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
@@ -57,5 +58,23 @@ public class Carrera {
 		return "Carrera [idCarrera=" + idCarrera + ", nombre=" + nombre + ", carreraEstudiante=" + carreraEstudiante
 				+ "]";
 	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(idCarrera, nombre);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Carrera other = (Carrera) obj;
+		return idCarrera == other.idCarrera && Objects.equals(nombre, other.nombre);
+	}
+	
 }
 
