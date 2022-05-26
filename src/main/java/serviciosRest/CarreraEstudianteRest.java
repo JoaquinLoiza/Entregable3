@@ -3,12 +3,16 @@ package serviciosRest;
 
 import dao.CarreraEstudianteDao;
 import dao.EstudianteDao;
-import dao.CarreraDao;
 
+import java.util.List;
+
+import dao.CarreraDao;
+import entidades.Carrera;
 import entidades.CarreraEstudiante;
 
 import jakarta.servlet.http.HttpServlet;
 import jakarta.ws.rs.Consumes;
+import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
 
@@ -43,7 +47,13 @@ public class CarreraEstudianteRest extends HttpServlet{
 			+ "o el estudiante con el  " + c.getEstudiante().getDni() + "no existen")
 			.type(MediaType.TEXT_PLAIN).build();
 			}
-		}
+	}
+	
+	@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<Carrera> getCarrerasInscriptos() {
+		return CarreraEstudianteDao.getInstance().getCarrerasInscriptos();
+	}
 	
 	public class RecursoDuplicado extends WebApplicationException {
 
