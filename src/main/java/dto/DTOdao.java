@@ -25,6 +25,20 @@ public class DTOdao{
 	
 	
 	public void crearReporte() {
+		if(this.registros.isEmpty()) {
+			System.out.println("entro a empty");
+			this.crearRegistros();
+		}
+		else {
+			System.out.println("entro al else");
+
+			this.vaciarRegistros();
+			this.crearRegistros();
+		}
+		
+	}
+
+	private void crearRegistros() {
 		ArrayList<Carrera> carreras = (ArrayList<Carrera>) CarreraDao.getInstance().findAll();
 		for(Carrera c : carreras) {
 			Registro r = new Registro();
@@ -34,6 +48,7 @@ public class DTOdao{
 			r.setAnioGraduados(x);
 			this.registros.add(r);
 		}
+		
 	}
 
 	private HashMap<Integer, Integer> traerGraduadosPorAnio(Carrera c) {
@@ -46,10 +61,14 @@ public class DTOdao{
 	}
 
 	public ArrayList<Registro> getRegistros() {
-		return registros;
+		return this.registros;
 	}
 
 	public void setRegistros(ArrayList<Registro> registros) {
 		this.registros = registros;
+	}
+	
+	public void vaciarRegistros() {
+		this.registros.clear();
 	}
 }
