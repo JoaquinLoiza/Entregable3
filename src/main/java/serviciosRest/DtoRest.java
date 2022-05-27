@@ -16,8 +16,7 @@ public class DtoRest extends HttpServlet{
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getRegistros(){
-		DTOdao.getInstance().crearReporte();
-		return Response.status(201).entity(DTOdao.getInstance().getRegistros().toString()).build();
+		return Response.status(201).entity(DTOdao.getInstance().crearReporte().toString()).build();
 	}
 
 }

@@ -12,8 +12,6 @@ public class DTOdao{
 	
 	private static DTOdao daodto;
 	
-	private ArrayList<Registro> registros = new ArrayList<>();
-	
 	private DTOdao(){}
 	
 	public static DTOdao getInstance() {
@@ -23,22 +21,9 @@ public class DTOdao{
 		return daodto;
 	}
 	
-	
-	public void crearReporte() {
-		if(this.registros.isEmpty()) {
-			System.out.println("entro a empty");
-			this.crearRegistros();
-		}
-		else {
-			System.out.println("entro al else");
 
-			this.vaciarRegistros();
-			this.crearRegistros();
-		}
-		
-	}
-
-	private void crearRegistros() {
+	public ArrayList<Registro> crearReporte() {
+		ArrayList<Registro> registros = new ArrayList<Registro>();
 		ArrayList<Carrera> carreras = (ArrayList<Carrera>) CarreraDao.getInstance().findAll();
 		for(Carrera c : carreras) {
 			Registro r = new Registro();
@@ -46,9 +31,9 @@ public class DTOdao{
 			r.setInscriptos(EstudianteDao.getInstance().getEstudiantesPorCarrera(c));
 			HashMap<Integer, Integer> x = this.traerGraduadosPorAnio(c);
 			r.setAnioGraduados(x);
-			this.registros.add(r);
+			registros.add(r);
 		}
-		
+		return registros;
 	}
 
 	private HashMap<Integer, Integer> traerGraduadosPorAnio(Carrera c) {
@@ -58,17 +43,5 @@ public class DTOdao{
 			result.put(i, CarreraEstudianteDao.getInstance().getCantidadGraduadosPorAnio(i,c).size());
 		}		
 		return result;
-	}
-
-	public ArrayList<Registro> getRegistros() {
-		return this.registros;
-	}
-
-	public void setRegistros(ArrayList<Registro> registros) {
-		this.registros = registros;
-	}
-	
-	public void vaciarRegistros() {
-		this.registros.clear();
 	}
 }

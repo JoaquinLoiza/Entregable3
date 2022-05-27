@@ -41,6 +41,6 @@ public class Registro {
 
 	@Override
 	public String toString() {
-		return "Registro [c=" + c.getNombre() +  ". Los alumnos graduados por año son =" + anioGraduados + "]";
+		return "Registro [Carrera =" + c.getNombre() +  ". Los alumnos graduados en el anio =" + anioGraduados + "]";
 	}
 }

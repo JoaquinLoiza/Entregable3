@@ -79,6 +79,7 @@ public class CarreraEstudianteDao implements DAO<CarreraEstudiante, Integer> {
 		query.setParameter(1, c.getIdCarrera());
 		@SuppressWarnings("unchecked")
 		ArrayList<Integer> e = (ArrayList<Integer>) query.getResultList();
+		em.close();
 		return e;
 	}
 
@@ -91,6 +92,7 @@ public class CarreraEstudianteDao implements DAO<CarreraEstudiante, Integer> {
 		query.setParameter(2, i);
 		@SuppressWarnings("unchecked")
 		ArrayList<Estudiante> e = (ArrayList<Estudiante>) query.getResultList();
+		em.close();
 		return e;
 	}
 
