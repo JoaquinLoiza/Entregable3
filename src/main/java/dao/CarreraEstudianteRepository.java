@@ -11,24 +11,25 @@ import interfaces.DAO;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.Query;
 
-public class CarreraEstudianteDao implements DAO<CarreraEstudiante, Integer> {
-	private static CarreraEstudianteDao daoCarreraEstudiante;
+public class CarreraEstudianteRepository implements DAO<CarreraEstudiante, Integer> {
+	private static CarreraEstudianteRepository daoCarreraEstudiante;
+	private EntityManager em;
+	private CarreraEstudianteRepository(){
+		this.em=Emf.createEntityManager();
+	}
 	
-	private CarreraEstudianteDao(){}
-	
-	public static CarreraEstudianteDao getInstance() {
+	public static CarreraEstudianteRepository getInstance() {
 		if( daoCarreraEstudiante == null) {
-			 daoCarreraEstudiante = new CarreraEstudianteDao();
+			 daoCarreraEstudiante = new CarreraEstudianteRepository();
 		}
 		return daoCarreraEstudiante;
 	}
 	@Override
 	public CarreraEstudiante persist(CarreraEstudiante entity) {
-		EntityManager em=Emf.createEntityManager();
-		em.getTransaction().begin();
-		em.persist(entity);
-		em.getTransaction().commit();
-		em.close();
+		this.em.getTransaction().begin();
+		this.em.persist(entity);
+		this.em.getTransaction().commit();
+		this.em.close();
 		return entity;
 	}
 
@@ -46,12 +47,12 @@ public class CarreraEstudianteDao implements DAO<CarreraEstudiante, Integer> {
 
 	@Override
 	public List<CarreraEstudiante> findAll() {
-		EntityManager em = Emf.createEntityManager();
-		em.getTransaction().begin();
+		this.em.getTransaction().begin();
 		String jpql = "SELECT ce FROM CarreraEstudiante ce";
-		Query query = em.createQuery(jpql);
+		Query query = this.em.createQuery(jpql);
 		@SuppressWarnings("unchecked")
-		List<CarreraEstudiante> r = query.getResultList(); 
+		List<CarreraEstudiante> r = query.getResultList();
+		this.em.close();
 		return r;
 	}
 
@@ -62,37 +63,35 @@ public class CarreraEstudianteDao implements DAO<CarreraEstudiante, Integer> {
 	}
 
 	public List<Carrera> getCarrerasInscriptos() {
-		EntityManager em = Emf.createEntityManager();
-		em.getTransaction().begin();
+		this.em.getTransaction().begin();
 		String jpql = "SELECT c FROM CarreraEstudiante ce JOIN ce.carrera c GROUP BY c.idCarrera ORDER BY COUNT(c.idCarrera) DESC";
-		Query query = em.createQuery(jpql);
+		Query query = this.em.createQuery(jpql);
 		@SuppressWarnings("unchecked")
 		List<Carrera> r = query.getResultList(); 
+		this.em.close();
 		return r;
 	}
 
 	public ArrayList<Integer> traerAnios(Carrera c) {
-		EntityManager em = Emf.createEntityManager();
-		em.getTransaction().begin();
+		this.em.getTransaction().begin();
 		String jpql = "SELECT ce.anioGraduacion FROM CarreraEstudiante ce JOIN ce.estudiante e JOIN ce.carrera c WHERE c.idCarrera = ?1 ORDER BY ce.anioGraduacion ASC";
-		Query query = em.createQuery(jpql);
+		Query query = this.em.createQuery(jpql);
 		query.setParameter(1, c.getIdCarrera());
 		@SuppressWarnings("unchecked")
 		ArrayList<Integer> e = (ArrayList<Integer>) query.getResultList();
-		em.close();
+		this.em.getTransaction().commit();
 		return e;
 	}
 
 	public ArrayList<Estudiante> getCantidadGraduadosPorAnio(Integer i, Carrera c) {
-		EntityManager em = Emf.createEntityManager();
-		em.getTransaction().begin();
+		this.em.getTransaction().begin();
 		String jpql= "SELECT e FROM CarreraEstudiante ce JOIN ce.carrera c JOIN ce.estudiante e WHERE c.idCarrera = ?1 AND ce.anioGraduacion = ?2 AND ce.graduado = true";
-		Query query = em.createQuery(jpql);
+		Query query = this.em.createQuery(jpql);
 		query.setParameter(1, c.getIdCarrera());
 		query.setParameter(2, i);
 		@SuppressWarnings("unchecked")
 		ArrayList<Estudiante> e = (ArrayList<Estudiante>) query.getResultList();
-		em.close();
+		this.em.getTransaction().commit();
 		return e;
 	}
 

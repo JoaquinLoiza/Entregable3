@@ -3,9 +3,9 @@ package dto;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import dao.CarreraDao;
-import dao.CarreraEstudianteDao;
-import dao.EstudianteDao;
+import dao.CarreraRepository;
+import dao.CarreraEstudianteRepository;
+import dao.EstudianteRepository;
 import entidades.Carrera;
 
 public class DTOdao{
@@ -24,11 +24,11 @@ public class DTOdao{
 
 	public ArrayList<Registro> crearReporte() {
 		ArrayList<Registro> registros = new ArrayList<Registro>();
-		ArrayList<Carrera> carreras = (ArrayList<Carrera>) CarreraDao.getInstance().findAll();
+		ArrayList<Carrera> carreras = (ArrayList<Carrera>) CarreraRepository.getInstance().findAll();
 		for(Carrera c : carreras) {
 			Registro r = new Registro();
 			r.setC(c);
-			r.setInscriptos(EstudianteDao.getInstance().getEstudiantesPorCarrera(c));
+			r.setInscriptos(EstudianteRepository.getInstance().getEstudiantesPorCarrera(c));
 			HashMap<Integer, Integer> x = this.traerGraduadosPorAnio(c);
 			r.setAnioGraduados(x);
 			registros.add(r);
@@ -37,10 +37,10 @@ public class DTOdao{
 	}
 
 	private HashMap<Integer, Integer> traerGraduadosPorAnio(Carrera c) {
-		ArrayList<Integer> anios = CarreraEstudianteDao.getInstance().traerAnios(c);
+		ArrayList<Integer> anios = CarreraEstudianteRepository.getInstance().traerAnios(c);
 		HashMap<Integer, Integer> result = new HashMap<>();
 		for(Integer i : anios) {
-			result.put(i, CarreraEstudianteDao.getInstance().getCantidadGraduadosPorAnio(i,c).size());
+			result.put(i, CarreraEstudianteRepository.getInstance().getCantidadGraduadosPorAnio(i,c).size());
 		}		
 		return result;
 	}

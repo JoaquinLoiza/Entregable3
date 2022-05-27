@@ -7,14 +7,16 @@ import entitymanagerfactory.Emf;
 import interfaces.DAO;
 import jakarta.persistence.EntityManager;
 
-public class CarreraDao implements DAO<Carrera, Integer>{
-	private static CarreraDao daoCarrera;
+public class CarreraRepository implements DAO<Carrera, Integer>{
+	private static CarreraRepository daoCarrera;
+	private EntityManager em;
+	private CarreraRepository(){
+		this.em=Emf.createEntityManager();
+	}
 	
-	private CarreraDao(){}
-	
-	public static CarreraDao getInstance() {
+	public static CarreraRepository getInstance() {
 		if(daoCarrera == null) {
-			daoCarrera = new CarreraDao();
+			daoCarrera = new CarreraRepository();
 		}
 		return daoCarrera;
 	}
@@ -22,11 +24,10 @@ public class CarreraDao implements DAO<Carrera, Integer>{
 	@Override
 	//Guardar una carrera
 	public Carrera persist(Carrera entity) {
-		EntityManager em=Emf.createEntityManager();
-		em.getTransaction().begin();
-		em.persist(entity);
-		em.getTransaction().commit();
-		em.close();
+		this.em.getTransaction().begin();
+		this.em.persist(entity);
+		this.em.getTransaction().commit();
+		this.em.close();
 		return entity;
 	}
 
@@ -40,19 +41,19 @@ public class CarreraDao implements DAO<Carrera, Integer>{
 	@Override
 	//Buscar carrera por id
 	public Carrera findById(Integer id) {
-		EntityManager entityManager=Emf.createEntityManager();
-		Carrera carrera=entityManager.find(Carrera.class, id);
-		entityManager.close();
+		this.em.getTransaction().begin();
+		Carrera carrera= this.em.find(Carrera.class, id);
+		this.em.close();
 		return carrera;
 	}
 
 	@Override
 	//Traer todas las carreras
 	public List<Carrera> findAll() {
-		EntityManager e = Emf.createEntityManager();
+		this.em.getTransaction().begin();
 		@SuppressWarnings("unchecked")
-		List<Carrera> list = e.createQuery("SELECT c FROM Carrera c").getResultList();
-		e.close();
+		List<Carrera> list = this.em.createQuery("SELECT c FROM Carrera c").getResultList();
+		this.em.getTransaction().commit();
 		return list;
 	}
 

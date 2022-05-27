@@ -3,7 +3,7 @@ package serviciosRest;
 import java.util.ArrayList;
 import java.util.List;
 
-import dao.EstudianteDao;
+import dao.EstudianteRepository;
 import entidades.Estudiante;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.DELETE;
@@ -23,7 +23,7 @@ public class EstudianteRest {
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<Estudiante> getEstudiante(){
-		return EstudianteDao.getInstance().findAll();
+		return EstudianteRepository.getInstance().findAll();
 	}
 	
 	@GET
@@ -31,7 +31,7 @@ public class EstudianteRest {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Estudiante getEstudianteById(@PathParam("id") String msg) {
 		int id = Integer.valueOf(msg);
-		Estudiante e = EstudianteDao.getInstance().findById(id);
+		Estudiante e = EstudianteRepository.getInstance().findById(id);
 		if(e != null) {
 			return e;			
 		}
@@ -45,7 +45,7 @@ public class EstudianteRest {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Estudiante getEstudianteByNroLibreta(@PathParam("nroLibreta") String msg) {
 		int nroLibreta = Integer.valueOf(msg);
-		Estudiante e = EstudianteDao.getInstance().findByNroLibreta(nroLibreta);
+		Estudiante e = EstudianteRepository.getInstance().findByNroLibreta(nroLibreta);
 		if(e != null) {
 			return e;			
 		}
@@ -57,7 +57,7 @@ public class EstudianteRest {
 	@Path("/genero/{genero}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Estudiante getEstudianteByGenero(@PathParam("genero") String msg) {
-		Estudiante e = EstudianteDao.getInstance().findByGenero(msg);
+		Estudiante e = EstudianteRepository.getInstance().findByGenero(msg);
 		if(e != null) {
 			return e;			
 		}
@@ -71,7 +71,7 @@ public class EstudianteRest {
 	@Produces(MediaType.APPLICATION_JSON)
 	public ArrayList<Estudiante> getEstudiantesPorCiudadYCarrera(@PathParam("idcarrera") String carrera, @PathParam("ciudad") String ciudad) {
 		int idc = Integer.valueOf(carrera);
-		ArrayList<Estudiante> e = EstudianteDao.getInstance().findByCarreraByCuidad(idc, ciudad);
+		ArrayList<Estudiante> e = EstudianteRepository.getInstance().findByCarreraByCuidad(idc, ciudad);
 		if(e != null) {
 			return e;			
 		}
@@ -84,7 +84,7 @@ public class EstudianteRest {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response createEstudiante(Estudiante e) {
-		Estudiante result=EstudianteDao.getInstance().persist(e);
+		Estudiante result=EstudianteRepository.getInstance().persist(e);
 	
 		if(result==null) {
 			throw new RecursoDuplicado(e.getDni());

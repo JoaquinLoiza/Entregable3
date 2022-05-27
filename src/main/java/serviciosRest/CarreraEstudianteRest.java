@@ -1,12 +1,12 @@
 package serviciosRest;
 
 
-import dao.CarreraEstudianteDao;
-import dao.EstudianteDao;
+import dao.CarreraEstudianteRepository;
+import dao.EstudianteRepository;
 
 import java.util.List;
 
-import dao.CarreraDao;
+import dao.CarreraRepository;
 import entidades.Carrera;
 import entidades.CarreraEstudiante;
 
@@ -29,8 +29,8 @@ public class CarreraEstudianteRest extends HttpServlet{
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response createCarreraEstudiante(CarreraEstudiante c) {
-		if(CarreraDao.getInstance().findAll().contains(c.getCarrera()) && EstudianteDao.getInstance().findAll().contains(c.getEstudiante())){
-			CarreraEstudiante result = CarreraEstudianteDao.getInstance().persist(c);
+		if(CarreraRepository.getInstance().findAll().contains(c.getCarrera()) && EstudianteRepository.getInstance().findAll().contains(c.getEstudiante())){
+			CarreraEstudiante result = CarreraEstudianteRepository.getInstance().persist(c);
 			if(result != null) {
 				return Response.status(201).entity(c).build();				
 			}
@@ -48,14 +48,14 @@ public class CarreraEstudianteRest extends HttpServlet{
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<Carrera> getCarrerasInscriptos() {
-		return CarreraEstudianteDao.getInstance().getCarrerasInscriptos();
+		return CarreraEstudianteRepository.getInstance().getCarrerasInscriptos();
 	}
 	
 	@GET
 	@Path("/all")
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<CarreraEstudiante> getAll() {
-		return CarreraEstudianteDao.getInstance().findAll();
+		return CarreraEstudianteRepository.getInstance().findAll();
 	}
 	
 	public class RecursoDuplicado extends WebApplicationException {

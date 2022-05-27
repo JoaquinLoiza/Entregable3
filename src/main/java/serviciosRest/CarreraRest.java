@@ -2,7 +2,7 @@ package serviciosRest;
 
 import java.util.List;
 
-import dao.CarreraDao;
+import dao.CarreraRepository;
 import entidades.Carrera;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.ws.rs.Consumes;
@@ -24,7 +24,7 @@ public class CarreraRest extends HttpServlet{
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<Carrera> getCarrera(){
-		return CarreraDao.getInstance().findAll();
+		return CarreraRepository.getInstance().findAll();
 	}
 	
 	@GET
@@ -32,7 +32,7 @@ public class CarreraRest extends HttpServlet{
 	@Produces(MediaType.APPLICATION_JSON)
 	public Carrera getCarreraById(@PathParam("id") String msg) {
 		int id = Integer.valueOf(msg);
-		Carrera carrera = CarreraDao.getInstance().findById(id);
+		Carrera carrera = CarreraRepository.getInstance().findById(id);
 		if(carrera != null) {
 			return carrera;			
 		}
@@ -45,7 +45,7 @@ public class CarreraRest extends HttpServlet{
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response createCarrera(Carrera c) {
-		Carrera result= CarreraDao.getInstance().persist(c);
+		Carrera result= CarreraRepository.getInstance().persist(c);
 		
 		if(result==null) {
 			throw new RecursoDuplicado(c. getIdCarrera());

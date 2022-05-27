@@ -10,29 +10,34 @@ import entitymanagerfactory.Emf;
 import interfaces.DAO;
 import jakarta.persistence.EntityManager;
 
-public class EstudianteDao implements DAO<Estudiante, Integer>{
-	private static EstudianteDao daoEstudiante;
+public class EstudianteRepository implements DAO<Estudiante, Integer>{
+	private static EstudianteRepository daoEstudiante;
+	private EntityManager em;
+	private EstudianteRepository(){
+		this.em= Emf.createEntityManager();
+	}
 	
-	private EstudianteDao(){}
-	
-	public static EstudianteDao getInstance() {
+	public static EstudianteRepository getInstance() {
 		if(daoEstudiante == null) {
-			daoEstudiante = new EstudianteDao();
+			daoEstudiante = new EstudianteRepository();
 		}
 		return daoEstudiante;
 	}
 
 	@Override
 	public Estudiante persist(Estudiante entity) {
-		EntityManager em=Emf.createEntityManager();
-		em.getTransaction().begin();
+		this.em.getTransaction().begin();
 		Estudiante estudiante=em.find(Estudiante.class, entity.getDni());
 		if(estudiante==null) {
-			em.persist(entity);
-			em.getTransaction().commit();
-			em.close();
+			this.em.persist(entity);
+			this.em.getTransaction().commit();
+			this.em.close();
 			return entity;
-		} else return null;
+		} else {
+			this.em.close();
+			return null;
+		}
+		
 	}
 
 	@Override
@@ -42,20 +47,19 @@ public class EstudianteDao implements DAO<Estudiante, Integer>{
 
 	@Override
 	public Estudiante findById(Integer id) {
-		EntityManager entityManager=Emf.createEntityManager();
-		Estudiante estudiante=entityManager.find(Estudiante.class, id);
-		entityManager.close();
+		Estudiante estudiante=this.em.find(Estudiante.class, id);
+		this.em.close();
 		return estudiante;
 	}
 	
 	public Estudiante findByNroLibreta(Integer nroLibreta) {
-		EntityManager entityManager= Emf.createEntityManager();
-		entityManager.getTransaction().begin();
+		this.em.getTransaction().begin();
 		String jpql= "SELECT e FROM Estudiante e WHERE e.nroLibreta = ?1";
-		Query query =entityManager.createQuery(jpql);
+		Query query = this.em.createQuery(jpql);
 		query.setParameter(1, nroLibreta);
 		@SuppressWarnings("unchecked")
 		List<Estudiante> e = query.getResultList();
+		this.em.close();
 		if(!e.isEmpty()) {
 			Estudiante est = e.get(0);
 			return est;
@@ -63,13 +67,13 @@ public class EstudianteDao implements DAO<Estudiante, Integer>{
 	}
 	
 	public Estudiante findByGenero(String genero) {
-		EntityManager entityManager= Emf.createEntityManager();
-		entityManager.getTransaction().begin();
+		this.em.getTransaction().begin();
 		String jpql= "SELECT e FROM Estudiante e WHERE e.genero = ?1";
-		Query query =entityManager.createQuery(jpql);
+		Query query = this.em.createQuery(jpql);
 		query.setParameter(1, genero);
 		@SuppressWarnings("unchecked")
 		List<Estudiante> e = query.getResultList();
+		this.em.close();
 		if(!e.isEmpty()) {
 			Estudiante est = e.get(0);
 			return est;
@@ -78,13 +82,12 @@ public class EstudianteDao implements DAO<Estudiante, Integer>{
 
 	@Override
 	public List<Estudiante> findAll() {
-		EntityManager e = Emf.createEntityManager();
-		e.getTransaction().begin();
+		this.em.getTransaction().begin();
 		String jpql = "SELECT e FROM Estudiante e ORDER BY e.apellido ASC";
-		Query query = e.createQuery(jpql);
+		Query query = this.em.createQuery(jpql);
 		@SuppressWarnings("unchecked")
 		List<Estudiante> resultados = query.getResultList();
-		e.close();
+		this.em.close();
 		return resultados;
 	}
 
@@ -94,25 +97,25 @@ public class EstudianteDao implements DAO<Estudiante, Integer>{
 	}
 
 	public ArrayList<Estudiante> getEstudiantesPorCarrera(Carrera c) {
-		EntityManager em = Emf.createEntityManager();
-		em.getTransaction().begin();
+		this.em.getTransaction().begin();
 		String jpql = "SELECT e FROM CarreraEstudiante ce JOIN ce.estudiante e JOIN ce.carrera c WHERE c.idCarrera = ?1 ORDER BY e.apellido ASC";
-		Query query = em.createQuery(jpql);
+		Query query = this.em.createQuery(jpql);
 		query.setParameter(1, c.getIdCarrera());
 		@SuppressWarnings("unchecked")
 		List<Estudiante> resultados = query.getResultList();
+		this.em.getTransaction().commit();
 		return (ArrayList<Estudiante>) resultados;
 	}
 
 	public ArrayList<Estudiante> findByCarreraByCuidad(int idc, String ciudad) {
-		EntityManager em = Emf.createEntityManager();
-		em.getTransaction().begin();
+		this.em.getTransaction().begin();
 		@SuppressWarnings("unchecked")
 		List<Estudiante> result = 
-		em.createQuery("SELECT e FROM CarreraEstudiante ce JOIN ce.carrera c JOIN ce.estudiante e WHERE c.idCarrera = ?1 AND e.ciudad = ?2")
+		this.em.createQuery("SELECT e FROM CarreraEstudiante ce JOIN ce.carrera c JOIN ce.estudiante e WHERE c.idCarrera = ?1 AND e.ciudad = ?2")
 		.setParameter(1, idc)
 		.setParameter(2, ciudad)
 		.getResultList();
+		this.em.close();
 		return (ArrayList<Estudiante>) result;		
 	}
 }
