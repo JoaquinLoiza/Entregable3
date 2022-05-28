@@ -1,4 +1,4 @@
-package dao;
+package repositorios;
 
 
 import java.util.ArrayList;
@@ -38,11 +38,6 @@ public class EstudianteRepository implements DAO<Estudiante, Integer>{
 			return null;
 		}
 		
-	}
-
-	@Override
-	public Estudiante update(Integer id, Estudiante newEntityValues) {
-		return null;
 	}
 
 	@Override
@@ -89,11 +84,6 @@ public class EstudianteRepository implements DAO<Estudiante, Integer>{
 		List<Estudiante> resultados = query.getResultList();
 		this.em.close();
 		return resultados;
-	}
-
-	@Override
-	public boolean delete(Integer id) {
-		return false;
 	}
 
 	public ArrayList<Estudiante> getEstudiantesPorCarrera(Carrera c) {

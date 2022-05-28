@@ -1,6 +1,7 @@
-package dto;
+package otros;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 
 import entidades.Carrera;
@@ -41,6 +42,7 @@ public class Registro {
 
 	@Override
 	public String toString() {
-		return "Registro [Carrera =" + c.getNombre() +  ". Los alumnos graduados en el anio =" + anioGraduados + "]";
+		return "Carrera = " + c.getNombre() + ". Graduados = [Año = Cantidad] = [" +anioGraduados+"].";
 	}
+	
 }

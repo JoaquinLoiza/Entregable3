@@ -54,12 +54,6 @@ public class Carrera {
 	}
 
 	@Override
-	public String toString() {
-		return "Carrera [idCarrera=" + idCarrera + ", nombre=" + nombre + ", carreraEstudiante=" + carreraEstudiante
-				+ "]";
-	}
-
-	@Override
 	public int hashCode() {
 		return Objects.hash(idCarrera, nombre);
 	}
@@ -74,6 +68,12 @@ public class Carrera {
 			return false;
 		Carrera other = (Carrera) obj;
 		return idCarrera == other.idCarrera && Objects.equals(nombre, other.nombre);
+	}
+
+	@Override
+	public String toString() {
+		return "Carrera [idCarrera=" + idCarrera + ", nombre=" + nombre + ", carreraEstudiante=" + carreraEstudiante
+				+ "]";
 	}
 	
 }

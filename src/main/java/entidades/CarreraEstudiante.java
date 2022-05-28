@@ -78,9 +78,11 @@ public class CarreraEstudiante implements Serializable{
 
 	@Override
 	public String toString() {
-		return "CarreraEstudiante [estudiante=" + estudiante + ", carrera=" + carrera + ", graduado=" + graduado
-				+ ", aniosAntiguedad=" + aniosAntiguedad + ", anioGraduacion=" + anioGraduacion + "]";
+		return "[Estudiante = " + estudiante.getNombre() + ", Carrera =" + carrera.getNombre() + ". Graduado = " 
+				+ graduado + ", Años de antiguedad =" + aniosAntiguedad + ", Año de graduacion = " + anioGraduacion +"]";
 	}
+	
+	
 	
 	
 

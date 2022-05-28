@@ -19,14 +19,7 @@ public interface DAO<E, ID extends Serializable> {
 	 * @param newEntityValues an object with the new values to update the entity 
 	 * @return the updated entity or null if the entity id does not exist
 	 */
-	public E update(ID id,E newEntityValues);
-
-	/**
-	 * Find entity by id.
-	 *
-	 * @param id the id of the entity to find
-	 * @return the found entity or null if the entity id does not exist
-	 */
+	
 	public E findById(ID id);
 
 	/**
@@ -35,13 +28,5 @@ public interface DAO<E, ID extends Serializable> {
 	 * @return the list of entities
 	 */
 	public List<E> findAll();
-
-	/**
-	 * Delete an entity given its id.
-	 *
-	 * @param id the id of the entity to delete
-	 * @return true, if deleted. false, if entity id does not exist
-	 */
-	public boolean delete(ID id);
 	
 }

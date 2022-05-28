@@ -1,4 +1,4 @@
-package dao;
+package repositorios;
 
 import java.util.List;
 
@@ -32,13 +32,6 @@ public class CarreraRepository implements DAO<Carrera, Integer>{
 	}
 
 	@Override
-	//Editar una carrera
-	public Carrera update(Integer id, Carrera carrea) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	//Buscar carrera por id
 	public Carrera findById(Integer id) {
 		this.em.getTransaction().begin();
@@ -55,13 +48,6 @@ public class CarreraRepository implements DAO<Carrera, Integer>{
 		List<Carrera> list = this.em.createQuery("SELECT c FROM Carrera c").getResultList();
 		this.em.getTransaction().commit();
 		return list;
-	}
-
-	@Override
-	//Borrar una carrera
-	public boolean delete(Integer id) {
-		// TODO Auto-generated method stub
-		return false;
 	}
 
 }

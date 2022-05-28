@@ -1,8 +1,10 @@
-package dao;
+package repositorios;
 
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+
 import entidades.Carrera;
 import entidades.CarreraEstudiante;
 import entidades.Estudiante;
@@ -10,6 +12,7 @@ import entitymanagerfactory.Emf;
 import interfaces.DAO;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.Query;
+import otros.Registro;
 
 public class CarreraEstudianteRepository implements DAO<CarreraEstudiante, Integer> {
 	private static CarreraEstudianteRepository daoCarreraEstudiante;
@@ -34,33 +37,16 @@ public class CarreraEstudianteRepository implements DAO<CarreraEstudiante, Integ
 	}
 
 	@Override
-	public CarreraEstudiante update(Integer id, CarreraEstudiante newEntityValues) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public CarreraEstudiante findById(Integer id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public List<CarreraEstudiante> findAll() {
 		this.em.getTransaction().begin();
 		String jpql = "SELECT ce FROM CarreraEstudiante ce";
 		Query query = this.em.createQuery(jpql);
 		@SuppressWarnings("unchecked")
 		List<CarreraEstudiante> r = query.getResultList();
-		this.em.close();
+		this.em.getTransaction().commit();
 		return r;
 	}
 
-	@Override
-	public boolean delete(Integer id) {
-		// TODO Auto-generated method stub
-		return false;
-	}
 
 	public List<Carrera> getCarrerasInscriptos() {
 		this.em.getTransaction().begin();
@@ -68,7 +54,7 @@ public class CarreraEstudianteRepository implements DAO<CarreraEstudiante, Integ
 		Query query = this.em.createQuery(jpql);
 		@SuppressWarnings("unchecked")
 		List<Carrera> r = query.getResultList(); 
-		this.em.close();
+		this.em.getTransaction().commit();
 		return r;
 	}
 
@@ -93,6 +79,37 @@ public class CarreraEstudianteRepository implements DAO<CarreraEstudiante, Integ
 		ArrayList<Estudiante> e = (ArrayList<Estudiante>) query.getResultList();
 		this.em.getTransaction().commit();
 		return e;
+	}
+	
+	//Reporte
+	
+	public ArrayList<Registro> crearReporte() {
+		ArrayList<Registro> registros = new ArrayList<Registro>();
+		ArrayList<Carrera> carreras = (ArrayList<Carrera>) CarreraRepository.getInstance().findAll();
+		for(Carrera c : carreras) {
+			Registro r = new Registro();
+			r.setC(c);
+			r.setInscriptos(EstudianteRepository.getInstance().getEstudiantesPorCarrera(c));
+			HashMap<Integer, Integer> x = this.traerGraduadosPorAnio(c);
+			r.setAnioGraduados(x);
+			registros.add(r);
+		}
+		return registros;
+	}
+
+	private HashMap<Integer, Integer> traerGraduadosPorAnio(Carrera c) {
+		ArrayList<Integer> anios = CarreraEstudianteRepository.getInstance().traerAnios(c);
+		HashMap<Integer, Integer> result = new HashMap<>();
+		for(Integer i : anios) {
+			result.put(i, CarreraEstudianteRepository.getInstance().getCantidadGraduadosPorAnio(i,c).size());
+		}		
+		return result;
+	}
+
+	@Override
+	public CarreraEstudiante findById(Integer id) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

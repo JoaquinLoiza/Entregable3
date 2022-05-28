@@ -1,12 +1,8 @@
 package serviciosRest;
 
 
-import dao.CarreraEstudianteRepository;
-import dao.EstudianteRepository;
-
 import java.util.List;
 
-import dao.CarreraRepository;
 import entidades.Carrera;
 import entidades.CarreraEstudiante;
 
@@ -20,6 +16,9 @@ import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.WebApplicationException;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+import repositorios.CarreraEstudianteRepository;
+import repositorios.CarreraRepository;
+import repositorios.EstudianteRepository;
 
 @Path("/carreraEstudiante")
 public class CarreraEstudianteRest extends HttpServlet{
@@ -54,8 +53,15 @@ public class CarreraEstudianteRest extends HttpServlet{
 	@GET
 	@Path("/all")
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<CarreraEstudiante> getAll() {
-		return CarreraEstudianteRepository.getInstance().findAll();
+	public Response getAll() {
+		return Response.status(201).entity("Todas las tuplas de CarreraEstudiante = " + CarreraEstudianteRepository.getInstance().findAll().toString()).build();
+	}
+	
+	@GET
+	@Path("/reporte")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response reporte(){
+		return Response.status(201).entity("Reporte = " + CarreraEstudianteRepository.getInstance().crearReporte().toString()).build();
 	}
 	
 	public class RecursoDuplicado extends WebApplicationException {
