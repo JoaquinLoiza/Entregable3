@@ -82,7 +82,7 @@ public class EstudianteRepository implements DAO<Estudiante, Integer>{
 		Query query = this.em.createQuery(jpql);
 		@SuppressWarnings("unchecked")
 		List<Estudiante> resultados = query.getResultList();
-		this.em.close();
+		this.em.getTransaction().commit();
 		return resultados;
 	}
 
