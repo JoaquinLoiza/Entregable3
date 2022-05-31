@@ -9,7 +9,7 @@ import entidades.Estudiante;
 public class Registro {
 	private Carrera c;
 	private ArrayList<Estudiante> inscriptos;
-	private HashMap<Integer, Integer> anioGraduados; 
+	private ArrayList<String> anioGraduados; 
 	
 	public Registro() {
 		// TODO Auto-generated constructor stub
@@ -31,11 +31,11 @@ public class Registro {
 		this.inscriptos = inscriptos;
 	}
 
-	public HashMap<Integer, Integer> getAnioGraduados() {
+	public ArrayList<String> getAnioGraduados() {
 		return anioGraduados;
 	}
 
-	public void setAnioGraduados(HashMap<Integer, Integer> anioGraduados) {
+	public void setAnioGraduados(ArrayList<String> anioGraduados) {
 		this.anioGraduados = anioGraduados;
 	}
 

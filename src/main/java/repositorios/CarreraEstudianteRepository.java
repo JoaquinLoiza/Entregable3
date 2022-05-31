@@ -89,18 +89,18 @@ public class CarreraEstudianteRepository implements DAO<CarreraEstudiante, Integ
 			Registro r = new Registro();
 			r.setC(c);
 			r.setInscriptos(EstudianteRepository.getInstance().getEstudiantesPorCarrera(c));
-			HashMap<Integer, Integer> x = this.traerGraduadosPorAnio(c);
+			ArrayList<String> x = this.traerGraduadosPorAnio(c);
 			r.setAnioGraduados(x);
 			registros.add(r);
 		}
 		return registros;
 	}
 
-	private HashMap<Integer, Integer> traerGraduadosPorAnio(Carrera c) {
+	private ArrayList<String> traerGraduadosPorAnio(Carrera c) {
 		ArrayList<Integer> anios = CarreraEstudianteRepository.getInstance().traerAnios(c);
-		HashMap<Integer, Integer> result = new HashMap<>();
+		ArrayList<String> result = new ArrayList<>();
 		for(Integer i : anios) {
-			result.put(i, CarreraEstudianteRepository.getInstance().getCantidadGraduadosPorAnio(i,c).size());
+			result.add("Año: " + i + ". Cantidad de Graduados: "+ CarreraEstudianteRepository.getInstance().getCantidadGraduadosPorAnio(i,c).size() + ".");
 		}		
 		return result;
 	}

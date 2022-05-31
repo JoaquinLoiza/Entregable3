@@ -12,8 +12,9 @@ let btnCarreras = document.getElementById("btnCarreras");
 let btnEstudiantes = document.getElementById("btnEstudiantes");
 let btnCrearEstudiante = document.getElementById("crearEstudiante");
 let btnCrearCarrera = document.getElementById("crearCarrera");
-
+let btnDto = document.getElementById("btndto");
 //---------Event Listeners---------
+btnDto.addEventListener("click", reporte);
 btnCrearEstudiante.addEventListener("click", postEstudiante);
 btnCrearCarrera.addEventListener("click", postCarrera);
 btnCarreras.addEventListener("click", () => {
@@ -38,6 +39,28 @@ function getCarreras() {
         if(r != null){
 			for (let item of r) {	
 				carreras.push(item);				
+  			}       		
+        }
+    }).catch(error => console.log(error));
+}
+
+function reporte() {
+	let endpoint = url+'carreraEstudiante/reporte';
+	let div = document.getElementById("divdto");
+    fetch(endpoint)
+    .then(response => {
+            return response.json();
+    }).then(r => {
+        if(r != null){
+			for (let item of r) {
+				div.innerHTML += `<li> Carrera = ${item.c.nombre}</li>`;
+				div.innerHTML += `<p>Inscriptos = `;
+				for(let x of item.inscriptos){
+					div.innerHTML += `${x.nombre}.`;
+				}
+				for(let y of item.anioGraduados){
+					div.innerHTML += `<p>${y}</p>`;
+				}	
   			}       		
         }
     }).catch(error => console.log(error));

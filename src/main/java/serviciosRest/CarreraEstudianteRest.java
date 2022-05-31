@@ -1,6 +1,7 @@
 package serviciosRest;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 import entidades.Carrera;
@@ -16,6 +17,7 @@ import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.WebApplicationException;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+import otros.Registro;
 import repositorios.CarreraEstudianteRepository;
 import repositorios.CarreraRepository;
 import repositorios.EstudianteRepository;
@@ -60,8 +62,8 @@ public class CarreraEstudianteRest extends HttpServlet{
 	@GET
 	@Path("/reporte")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response reporte(){
-		return Response.status(201).entity("Reporte = " + CarreraEstudianteRepository.getInstance().crearReporte().toString()).build();
+	public ArrayList<Registro> reporte(){
+		return CarreraEstudianteRepository.getInstance().crearReporte();
 	}
 	
 	public class RecursoDuplicado extends WebApplicationException {
