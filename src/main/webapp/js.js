@@ -105,3 +105,38 @@ function postEstudiante(){
 
 
 }
+
+let btnCrearCarrera = document.getElementById("crearCarrera");
+btnCrearCarrera.addEventListener("click", postCarrera);
+function postCarrera(){
+
+	let nombre = document.getElementById("nombreCarrera").value;
+	
+	let endpoint = 'http://localhost:8080/Entregable3/rest/carreras';
+	
+	let nuevaCarrera = {
+		"nombre" : nombre
+	};
+	
+	console.log(nuevaCarrera);
+	fetch(endpoint, {
+            "method": 'POST',
+            "headers": { "Content-Type": "application/json" },
+            "body": JSON.stringify(nuevaCarrera)
+        }).then(function (r) {
+            if (!r.ok) {
+				console.log("r no ok");
+                //alert("Error al enviar los datos, intente nuevamente");
+            }
+            else {
+				console.log("r ok");
+			}
+        }).then(function () {
+            console.log("segundo then ");
+        }).catch(function (e) {
+            console.log(e);
+        });
+
+
+
+}
