@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en-US">
+<html lang="es-ES">
 	<head>
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
@@ -9,7 +9,8 @@
 	<button id="btnCarreras">Todas las carreras</button>
 	<button id="btnEstudiantes">Todos los estudiantes</button>
 	<div id="respuesta"></div>
-	<form method="POST">
+	<h4>Agregar una estudiante:</h4>
+	<form class="formEstudiante">
 		<label>Dni:</label>
 		<input type="number" id="dni" placeholder="Dni" required>
 		<label>Nombre:</label>
@@ -25,15 +26,14 @@
 		<label>Número de libreta:</label>
 		<input type="number" id="nroLibreta" placeholder="Número de libreta" required>
 	</form>
-	<button id="crearEstudiante">Enviar </button>
-	
+	<button id="crearEstudiante">Crear</button>
 	
 	<h4>Agregar una nueva carrera:</h4>
 	<form method="POST">
 		<label>Nombre de la carrera:</label>
 		<input type="text" id="nombreCarrera" required>
 	</form>
-	<button id="crearCarrera"> Crear </button>
+	<button id="crearCarrera">Crear</button>
 	</body>
 	<script src="js.js"></script>
 </html>

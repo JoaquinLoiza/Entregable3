@@ -4,26 +4,33 @@ window.addEventListener('DOMContentLoaded', () => {
 	getEstudiantes();
 });
 
-
+//---------Variables---------
+const url = 'http://localhost:8080/Entregable3/rest/';
 let carreras = [];
 let estudiantes = [];
-
 let btnCarreras = document.getElementById("btnCarreras");
+let btnEstudiantes = document.getElementById("btnEstudiantes");
+let btnCrearEstudiante = document.getElementById("crearEstudiante");
+let btnCrearCarrera = document.getElementById("crearCarrera");
+
+//---------Event Listeners---------
+btnCrearEstudiante.addEventListener("click", postEstudiante);
+btnCrearCarrera.addEventListener("click", postCarrera);
 btnCarreras.addEventListener("click", () => {
 	if(carreras.length != 0) {		
 		listar(carreras);
 	}
 }); 
 
-let btnEstudiantes = document.getElementById("btnEstudiantes");
 btnEstudiantes.addEventListener("click", () => {
 	if(estudiantes.length != 0) {		
 		listar(estudiantes);
 	}
 });
 
+//---------Metodos---------
 function getCarreras() {
-	let endpoint = 'http://localhost:8080/Entregable3/rest/carreras'; 
+	let endpoint = url+'carreras'; 
     fetch(endpoint)
     .then(response => {
             return response.json();
@@ -37,7 +44,7 @@ function getCarreras() {
 }
 
 function getEstudiantes() {
-	let endpoint = 'http://localhost:8080/Entregable3/rest/estudiantes'; 
+	let endpoint = url+'estudiantes'; 
     fetch(endpoint)
     .then(response => {
             return response.json();
@@ -60,18 +67,15 @@ function listar(array){
 	}
 }
 
-let btnCrearEstudiante = document.getElementById("crearEstudiante");
-btnCrearEstudiante.addEventListener("click", postEstudiante);
 function postEstudiante(){
-	let dni = parseInt(document.getElementById("dni").value);
+	
+	let dni = document.getElementById("dni").value;
 	let nombre = document.getElementById("nombre").value;
 	let apellido = document.getElementById("apellido").value;
-	let anios = parseInt(document.getElementById("anios").value);
+	let anios = document.getElementById("anios").value;
 	let genero = document.getElementById("genero").value;
 	let ciudad = document.getElementById("ciudad").value;
-	let nroLibreta = parseInt(document.getElementById("nroLibreta").value);
-	
-	let endpoint = 'http://localhost:8080/Entregable3/rest/estudiantes';
+	let nroLibreta = document.getElementById("nroLibreta").value;
 	
 	let alumno = {
 		"dni" : dni,
@@ -83,60 +87,47 @@ function postEstudiante(){
 		"cuidad" : ciudad
 	};
 	
-	console.log(alumno);
-	fetch(endpoint, {
+	fetch(url+'estudiantes', {
             "method": 'POST',
             "headers": { "Content-Type": "application/json" },
             "body": JSON.stringify(alumno)
         }).then(function (r) {
             if (!r.ok) {
-				console.log("r no ok");
-                //alert("Error al enviar los datos, intente nuevamente");
+                alert("Error al enviar los datos, intente nuevamente");
             }
             else {
 				console.log("r ok");
 			}
         }).then(function () {
-            console.log("segundo then ");
+
         }).catch(function (e) {
             console.log(e);
         });
-
-
-
 }
 
-let btnCrearCarrera = document.getElementById("crearCarrera");
-btnCrearCarrera.addEventListener("click", postCarrera);
+
 function postCarrera(){
 
 	let nombre = document.getElementById("nombreCarrera").value;
-	
-	let endpoint = 'http://localhost:8080/Entregable3/rest/carreras';
 	
 	let nuevaCarrera = {
 		"nombre" : nombre
 	};
 	
-	console.log(nuevaCarrera);
-	fetch(endpoint, {
+	fetch(url+'carreras', {
             "method": 'POST',
             "headers": { "Content-Type": "application/json" },
             "body": JSON.stringify(nuevaCarrera)
         }).then(function (r) {
             if (!r.ok) {
-				console.log("r no ok");
-                //alert("Error al enviar los datos, intente nuevamente");
+                alert("Error al enviar los datos, intente nuevamente");
             }
             else {
 				console.log("r ok");
 			}
         }).then(function () {
-            console.log("segundo then ");
+	
         }).catch(function (e) {
             console.log(e);
         });
-
-
-
 }
