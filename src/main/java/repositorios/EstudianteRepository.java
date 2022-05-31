@@ -31,10 +31,8 @@ public class EstudianteRepository implements DAO<Estudiante, Integer>{
 		if(estudiante==null) {
 			this.em.persist(entity);
 			this.em.getTransaction().commit();
-			this.em.close();
 			return entity;
 		} else {
-			this.em.close();
 			return null;
 		}
 		
@@ -42,8 +40,9 @@ public class EstudianteRepository implements DAO<Estudiante, Integer>{
 
 	@Override
 	public Estudiante findById(Integer id) {
+		this.em.getTransaction().begin();
 		Estudiante estudiante=this.em.find(Estudiante.class, id);
-		this.em.close();
+		this.em.getTransaction().commit();
 		return estudiante;
 	}
 	
@@ -54,7 +53,7 @@ public class EstudianteRepository implements DAO<Estudiante, Integer>{
 		query.setParameter(1, nroLibreta);
 		@SuppressWarnings("unchecked")
 		List<Estudiante> e = query.getResultList();
-		this.em.close();
+		this.em.getTransaction().commit();
 		if(!e.isEmpty()) {
 			Estudiante est = e.get(0);
 			return est;
@@ -68,7 +67,7 @@ public class EstudianteRepository implements DAO<Estudiante, Integer>{
 		query.setParameter(1, genero);
 		@SuppressWarnings("unchecked")
 		List<Estudiante> e = query.getResultList();
-		this.em.close();
+		this.em.getTransaction().commit();
 		if(!e.isEmpty()) {
 			Estudiante est = e.get(0);
 			return est;
@@ -105,7 +104,7 @@ public class EstudianteRepository implements DAO<Estudiante, Integer>{
 		.setParameter(1, idc)
 		.setParameter(2, ciudad)
 		.getResultList();
-		this.em.close();
+		this.em.getTransaction().commit();
 		return (ArrayList<Estudiante>) result;		
 	}
 }

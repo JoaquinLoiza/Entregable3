@@ -32,7 +32,6 @@ public class CarreraEstudianteRepository implements DAO<CarreraEstudiante, Integ
 		this.em.getTransaction().begin();
 		this.em.persist(entity);
 		this.em.getTransaction().commit();
-		this.em.close();
 		return entity;
 	}
 
