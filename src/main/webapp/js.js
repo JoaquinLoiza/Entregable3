@@ -63,13 +63,13 @@ function listar(array){
 let btnCrearEstudiante = document.getElementById("crearEstudiante");
 btnCrearEstudiante.addEventListener("click", postEstudiante);
 function postEstudiante(){
-	let dni = document.getElementById("dni").value;
+	let dni = parseInt(document.getElementById("dni").value);
 	let nombre = document.getElementById("nombre").value;
 	let apellido = document.getElementById("apellido").value;
-	let anios = document.getElementById("anios").value;
+	let anios = parseInt(document.getElementById("anios").value);
 	let genero = document.getElementById("genero").value;
 	let ciudad = document.getElementById("ciudad").value;
-	let nroLibreta = document.getElementById("nroLibreta").value;
+	let nroLibreta = parseInt(document.getElementById("nroLibreta").value);
 	
 	let endpoint = 'http://localhost:8080/Entregable3/rest/estudiantes';
 	
@@ -80,7 +80,7 @@ function postEstudiante(){
 		"anios" : anios,
 		"genero" : genero, 
 		"nroLibreta" : nroLibreta,
-		"ciudad" : ciudad
+		"cuidad" : ciudad
 	};
 	
 	console.log(alumno);
