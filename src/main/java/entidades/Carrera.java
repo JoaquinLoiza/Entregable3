@@ -67,7 +67,7 @@ public class Carrera {
 		if (getClass() != obj.getClass())
 			return false;
 		Carrera other = (Carrera) obj;
-		return idCarrera == other.idCarrera && Objects.equals(nombre, other.nombre);
+		return idCarrera == other.idCarrera;
 	}
 
 	@Override

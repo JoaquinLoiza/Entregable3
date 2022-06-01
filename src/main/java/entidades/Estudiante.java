@@ -118,9 +118,7 @@ public class Estudiante {
 		if (getClass() != obj.getClass())
 			return false;
 		Estudiante other = (Estudiante) obj;
-		return anios == other.anios && Objects.equals(apellido, other.apellido) && Objects.equals(ciudad, other.ciudad)
-				&& dni == other.dni && Objects.equals(genero, other.genero) && Objects.equals(nombre, other.nombre)
-				&& nroLibreta == other.nroLibreta;
+		return dni == other.dni;
 	}
 	
 	

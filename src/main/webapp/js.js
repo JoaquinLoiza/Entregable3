@@ -14,7 +14,14 @@ let btnCrearEstudiante = document.getElementById("crearEstudiante");
 let btnCrearCarrera = document.getElementById("crearCarrera");
 let btnDto = document.getElementById("btndto");
 let btnBy = document.getElementById("btnby");
+let selectCarreras = document.getElementById("carreras");
+let selectEstudiantes = document.getElementById("estudiantes");
+let btnAsignar = document.getElementById("asignar");
 //---------Event Listeners---------
+selectCarreras.addEventListener("click", () => {
+	rellenarSelects(carreras, estudiantes);
+})
+btnAsignar.addEventListener("click", asignarCarrera);
 btnDto.addEventListener("click", reporte);
 btnBy.addEventListener("click", getbycarrerabyciudad);
 btnCrearEstudiante.addEventListener("click", postEstudiante);
@@ -22,8 +29,12 @@ btnCrearCarrera.addEventListener("click", postCarrera);
 btnCarreras.addEventListener("click", () => {
 	if(carreras.length != 0) {		
 		listar(carreras);
+		rellenarSelects(carreras, estudiantes);
 	}
-}); 
+});
+
+
+
 
 btnEstudiantes.addEventListener("click", () => {
 	if(estudiantes.length != 0) {		
@@ -111,6 +122,19 @@ function listar(array){
 	}
 }
 
+function rellenarSelects(carreras, estudiantes){
+	selectCarreras.innerHTML = '';
+	selectEstudiantes.innerHTML = '';
+	for(let item of carreras) {
+       	selectCarreras.innerHTML += 
+  		`<option value="${item.idCarrera}">${item.nombre}</option>`;
+	}
+	for(let item of estudiantes) {
+       	selectEstudiantes.innerHTML += 
+  		`<option value="${item.dni}">${item.dni}</option>`;
+	}
+}
+
 function postEstudiante(){
 	
 	let dni = document.getElementById("dni").value;
@@ -174,4 +198,57 @@ function postCarrera(){
         }).catch(function (e) {
             console.log(e);
         });
+}
+
+function asignarCarrera(){
+	let idEstudiante = selectEstudiantes.value;
+	let idCarrera = selectCarreras.value;
+	let anio = document.getElementById("anioGraduacion").value;
+	let anios = document.getElementById("anioAntiguedad").value;
+	let g = document.getElementById("g").value;
+	
+	let estudiante = estudiantes.find(element => element.dni = idEstudiante);
+	let carrera = carreras.find(element => element.idCarrera = idCarrera);
+	
+	
+	let carreraEstudiante = {
+		"estudiante": {
+			"dni": estudiante.dni,
+			"nombre": estudiante.nombre,
+			"apellido": estudiante.apellido,
+			"anios": estudiante.anios,
+			"genero": estudiante.genero,
+			"nroLibreta": estudiante.nroLibreta,
+			"cuidad": estudiante.cuidad
+		},
+		"carrera": {
+			"idCarrera": carrera.idCarrera,
+			"nombre": carrera.nombre,
+			"carreraEstudiante": []
+		},
+		"graduado": g,
+		"aniosAntiguedad": anios,
+		"anioGraduacion": anio
+		};
+	
+	console.log(carreraEstudiante);
+	fetch(url+'carreraEstudiante', {
+            "method": 'POST',
+            "headers": { "Content-Type": "application/json" },
+            "body": JSON.stringify(carreraEstudiante)
+        }).then(function (r) {
+			console.log(r);
+            if (!r.ok) {
+                alert("Error al enviar los datos, intente nuevamente");
+            }
+            else {
+				console.log("r ok");
+			}
+        }).then(function () {
+
+        }).catch(function (e) {
+            console.log(e);
+        });
+	
+	
 }
