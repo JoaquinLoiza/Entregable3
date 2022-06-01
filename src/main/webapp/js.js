@@ -13,8 +13,10 @@ let btnEstudiantes = document.getElementById("btnEstudiantes");
 let btnCrearEstudiante = document.getElementById("crearEstudiante");
 let btnCrearCarrera = document.getElementById("crearCarrera");
 let btnDto = document.getElementById("btndto");
+let btnBy = document.getElementById("btnby");
 //---------Event Listeners---------
 btnDto.addEventListener("click", reporte);
+btnBy.addEventListener("click", getbycarrerabyciudad);
 btnCrearEstudiante.addEventListener("click", postEstudiante);
 btnCrearCarrera.addEventListener("click", postCarrera);
 btnCarreras.addEventListener("click", () => {
@@ -66,6 +68,25 @@ function reporte() {
     }).catch(error => console.log(error));
 }
 
+function getbycarrerabyciudad(){
+	let div = document.getElementById("divbusqueda");
+	let inputCarrera = document.getElementById("inputidcarrera").value;
+	let inputCuidad = document.getElementById("inputciudad").value;
+	let endpoint = url+'estudiantes/'+inputCarrera+'/'+inputCuidad;
+	
+	div.innerHTML = endpoint;
+	
+	fetch(endpoint)
+    .then(response => {
+            return response.json();
+    }).then(r => {
+        if(r != null){
+			for (let item of r) {
+				div.innerHTML+= `<li>${item.nombre}</li>`;
+  			}       		
+        }
+    }).catch(error => console.log(error));
+}
 function getEstudiantes() {
 	let endpoint = url+'estudiantes'; 
     fetch(endpoint)
