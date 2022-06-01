@@ -54,8 +54,8 @@ public class EstudianteRest {
 	@GET
 	@Path("/genero/{genero}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Estudiante getEstudianteByGenero(@PathParam("genero") String msg) {
-		Estudiante e = EstudianteRepository.getInstance().findByGenero(msg);
+	public List<Estudiante> getEstudianteByGenero(@PathParam("genero") String msg) {
+		List<Estudiante> e = EstudianteRepository.getInstance().findByGenero(msg);
 		if(e != null) {
 			return e;			
 		}

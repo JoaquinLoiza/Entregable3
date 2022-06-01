@@ -17,6 +17,8 @@ let btnBy = document.getElementById("btnby");
 let selectCarreras = document.getElementById("carreras");
 let selectEstudiantes = document.getElementById("estudiantes");
 let btnAsignar = document.getElementById("asignar");
+let btnBuscarLU=document.getElementById("btnBuscarLU");
+let btnGenero=document.getElementById("btnGenero");
 //---------Event Listeners---------
 selectCarreras.addEventListener("click", () => {
 	rellenarSelects(carreras, estudiantes);
@@ -25,7 +27,9 @@ btnAsignar.addEventListener("click", asignarCarrera);
 btnDto.addEventListener("click", reporte);
 btnBy.addEventListener("click", getbycarrerabyciudad);
 btnCrearEstudiante.addEventListener("click", postEstudiante);
+btnBuscarLU.addEventListener("click", getEstudianteByLU);
 btnCrearCarrera.addEventListener("click", postCarrera);
+btnGenero.addEventListener("click", getByGenero);
 btnCarreras.addEventListener("click", () => {
 	if(carreras.length != 0) {		
 		listar(carreras);
@@ -43,6 +47,42 @@ btnEstudiantes.addEventListener("click", () => {
 });
 
 //---------Metodos---------
+
+function getByGenero(){
+	let div = document.getElementById("divGenero");
+	let genero=document.getElementById("generoF").value;
+	div.innerHTML='';
+	let endpoint = url+'estudiantes/genero/'+genero;
+	fetch(endpoint)
+    .then(response => {
+            return response.json();
+    }).then(r => {
+        if(r != null){
+			for (let item of r) {	
+				div.innerHTML+=`<li>${item.nombre}</li>`;				
+  			}       		
+        }
+    }).catch(error => console.log(error));
+}
+	
+
+function getEstudianteByLU(){
+	let div = document.getElementById("divLibreta");
+	let inputLibreta=document.getElementById("inputNroLU").value;
+
+	let endpoint = url+'estudiantes/nroLibreta/'+inputLibreta;
+	
+	
+	fetch(endpoint)
+    .then(response => {
+            return response.json();
+    }).then(r => {
+        if(r != null){
+				div.innerHTML+= `<li>${r.nombre}</li>`;      		
+        }
+    }).catch(error => console.log(error));
+	
+}
 function getCarreras() {
 	let endpoint = url+'carreras'; 
     fetch(endpoint)
@@ -85,7 +125,7 @@ function getbycarrerabyciudad(){
 	let inputCuidad = document.getElementById("inputciudad").value;
 	let endpoint = url+'estudiantes/'+inputCarrera+'/'+inputCuidad;
 	
-	div.innerHTML = endpoint;
+	
 	
 	fetch(endpoint)
     .then(response => {
@@ -205,7 +245,7 @@ function asignarCarrera(){
 	let idCarrera = selectCarreras.value;
 	let anio = document.getElementById("anioGraduacion").value;
 	let anios = document.getElementById("anioAntiguedad").value;
-	let g = parseInt(document.getElementById("g").value);
+	let g = parseInt(divGenero);
 	
 	let estudiante = estudiantes.find(element => element.dni = idEstudiante);
 	let carrera = carreras.find(element => element.idCarrera = idCarrera);

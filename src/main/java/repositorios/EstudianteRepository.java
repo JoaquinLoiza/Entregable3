@@ -60,18 +60,18 @@ public class EstudianteRepository implements DAO<Estudiante, Integer>{
 		} else return null;
 	}
 	
-	public Estudiante findByGenero(String genero) {
+
+	public List<Estudiante> findByGenero(String genero) {
 		this.em.getTransaction().begin();
 		String jpql= "SELECT e FROM Estudiante e WHERE e.genero = ?1";
 		Query query = this.em.createQuery(jpql);
 		query.setParameter(1, genero);
 		@SuppressWarnings("unchecked")
-		List<Estudiante> e = query.getResultList();
+		List<Estudiante>e= query.getResultList();
 		this.em.getTransaction().commit();
-		if(!e.isEmpty()) {
-			Estudiante est = e.get(0);
-			return est;
-		} else return null;
+		
+		return e;
+		
 	}
 
 	@Override
