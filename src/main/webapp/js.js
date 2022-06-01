@@ -205,12 +205,11 @@ function asignarCarrera(){
 	let idCarrera = selectCarreras.value;
 	let anio = document.getElementById("anioGraduacion").value;
 	let anios = document.getElementById("anioAntiguedad").value;
-	let g = document.getElementById("g").value;
+	let g = parseInt(document.getElementById("g").value);
 	
 	let estudiante = estudiantes.find(element => element.dni = idEstudiante);
 	let carrera = carreras.find(element => element.idCarrera = idCarrera);
-	
-	
+
 	let carreraEstudiante = {
 		"estudiante": {
 			"dni": estudiante.dni,
@@ -229,7 +228,7 @@ function asignarCarrera(){
 		"graduado": g,
 		"aniosAntiguedad": anios,
 		"anioGraduacion": anio
-		};
+	}
 	
 	console.log(carreraEstudiante);
 	fetch(url+'carreraEstudiante', {
