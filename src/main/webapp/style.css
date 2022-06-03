@@ -15,7 +15,7 @@ body {
 }
 
 .cont-add-estudiante, .cont-add-carrera, .cont-matr-estudiante {
-    width: 50%;
+    width: 33%;
 }
 
 .form-estudiante div , .form-carrera div, .form-matricular div{
@@ -24,6 +24,19 @@ body {
 
 .cont-listar {
     margin-top: 20px;
+}
+
+.cont-busquedas {
+    width: 100%;
+    display: flex;
+}
+
+.cont-ciudad-id_carrera, .cont-genero, .cont-libreta {
+    width: 33%;
+}
+
+.cont-ciudad-id_carrera div, .cont-genero div, .cont-libreta div {
+    margin-top: 10px;
 }
 
 #respuesta {

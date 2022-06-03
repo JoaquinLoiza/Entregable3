@@ -37,7 +37,7 @@ btnCarreras.addEventListener("click", () => {
 //---------Metodos---------
 
 function getByGenero(){
-	let div = document.getElementById("divGenero");
+	let div = document.getElementById("resultado");
 	let genero=document.getElementById("generoF").value;
 	div.innerHTML='';
 	let endpoint = url+'estudiantes/genero/'+genero;
@@ -45,7 +45,8 @@ function getByGenero(){
     .then(response => {
             return response.json();
     }).then(r => {
-        if(r != null){
+		if(r != null){
+			div.innerHTML = "";
 			for (let item of r) {	
 				div.innerHTML+=`<li>${item.nombre}</li>`;				
   			}       		
@@ -55,7 +56,7 @@ function getByGenero(){
 	
 
 function getEstudianteByLU(){
-	let div = document.getElementById("divLibreta");
+	let div = document.getElementById("resultado");
 	let inputLibreta=document.getElementById("inputNroLU").value;
 
 	let endpoint = url+'estudiantes/nroLibreta/'+inputLibreta;
@@ -66,7 +67,8 @@ function getEstudianteByLU(){
             return response.json();
     }).then(r => {
         if(r != null){
-				div.innerHTML+= `<li>${r.nombre}</li>`;      		
+			div.innerHTML = "";
+			div.innerHTML+= `<li>${r.nombre}</li>`;      		
         }
     }).catch(error => console.log(error));
 	
@@ -109,7 +111,7 @@ function reporte() {
 }
 
 function getbycarrerabyciudad(){
-	let div = document.getElementById("divbusqueda");
+	let div = document.getElementById("respuesta");
 	let inputCarrera = document.getElementById("inputidcarrera").value;
 	let inputCuidad = document.getElementById("inputciudad").value;
 	let endpoint = url+'estudiantes/'+inputCarrera+'/'+inputCuidad;
@@ -121,6 +123,7 @@ function getbycarrerabyciudad(){
             return response.json();
     }).then(r => {
         if(r != null){
+			div.innerHTML = "";
 			for (let item of r) {
 				div.innerHTML+= `<li>${item.nombre}</li>`;
   			}       		
@@ -277,6 +280,4 @@ function asignarCarrera(){
         }).catch(function (e) {
             console.log(e);
         });
-	
-	
 }

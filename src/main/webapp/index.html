@@ -87,37 +87,53 @@
 				<button id="asignar">Asignar</button>
 			</div>
 		</div>
-		
+
+
+		<!-- DIV BUSQUEDA y RESULATDOS-->
+		<div class="cont-busquedas">
+			<div class="cont-ciudad-id_carrera">
+				<h4>Buscar estudiante por...</h4>
+				<div>
+					<label>Ciudad:</label><br>
+					<input type="text" id="inputciudad" required>
+				</div>
+				<div>
+					<label>ID Carrera:</label><br>
+					<input type="text" id="inputidcarrera" required>
+				</div>
+				<button id="btnby">Buscar</button>
+			</div>
+
+			<div class="cont-libreta">
+				<h4>buscar por numero de libreta</h4>
+				<div>
+					<label>Ingrese el numero de libreta:</label><br>
+					<input type="number" id="inputNroLU" required>
+				</div>
+				<button id="btnBuscarLU">Buscar</button>
+			</div>
+
+			<div class="cont-genero">
+				<h4>Buscar por genero</h4>
+				<div>
+					<label>Seleccione el genero:</label><br>
+					<select id="generoF">
+						<option value="mujer">Mujer</option>
+						<option value="hombre">Hombre</option>
+					</select>
+				</div>
+				<button id="btnGenero">Buscar</button>
+			</div>
+		</div>
+
 		<div class="cont-listar">
 			<button id="btnCarreras">Todas las carreras</button>
 			<button id="btnEstudiantes">Todos los estudiantes</button>
 			<button id="btndto">Reporte Dto</button>
 		</div>
-		<div id="respuesta"></div>		
-		
-		
-		<h4>Buscar estudiante por...</h4>
-		<label>Ciudad:</label>
-		<input type="text" id="inputciudad" required>
-		<label>ID Carrera:</label>
-		<input type="text" id="inputidcarrera" required>
-		<button id="btnby">Buscar</button>
-		<div id="divbusqueda"></div>
 
-		<h4>Numero de libreta</h4>
-		<label>Ingrese el numero de libreta: </label>
-		<input type="number" id="inputNroLU" required>
-		<button id="btnBuscarLU">Buscar</button>
-		<div id="divLibreta"></div>
-		<h4>Genero</h4>
-		<label>Seleccione el genero: </label>
-		<select id="generoF">
-			<option value="mujer">Mujer</option>
-			<option value="hombre">Hombre</option>
-		</select>
-		<button id="btnGenero">Buscar</button>
-		<div id="divGenero"></div>
-		
+		<div id="respuesta"></div>
+
 	</div>
 </body>
 <script src="js.js"></script>
