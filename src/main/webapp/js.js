@@ -20,9 +20,6 @@ let btnAsignar = document.getElementById("asignar");
 let btnBuscarLU=document.getElementById("btnBuscarLU");
 let btnGenero=document.getElementById("btnGenero");
 //---------Event Listeners---------
-selectCarreras.addEventListener("click", () => {
-	rellenarSelects(carreras, estudiantes);
-})
 btnAsignar.addEventListener("click", asignarCarrera);
 btnDto.addEventListener("click", reporte);
 btnBy.addEventListener("click", getbycarrerabyciudad);
@@ -30,20 +27,11 @@ btnCrearEstudiante.addEventListener("click", postEstudiante);
 btnBuscarLU.addEventListener("click", getEstudianteByLU);
 btnCrearCarrera.addEventListener("click", postCarrera);
 btnGenero.addEventListener("click", getByGenero);
-btnCarreras.addEventListener("click", () => {
-	if(carreras.length != 0) {		
-		listar(carreras);
-		rellenarSelects(carreras, estudiantes);
-	}
-});
-
-
-
-
-btnEstudiantes.addEventListener("click", () => {
-	if(estudiantes.length != 0) {		
-		listar(estudiantes);
-	}
+btnEstudiantes.addEventListener("click", () => listar(estudiantes));
+selectCarreras.addEventListener("click", () => rellenarSelects(carreras, estudiantes));
+btnCarreras.addEventListener("click", () => {	
+	listar(carreras);
+	rellenarSelects(carreras, estudiantes);
 });
 
 //---------Metodos---------
@@ -99,7 +87,7 @@ function getCarreras() {
 
 function reporte() {
 	let endpoint = url+'carreraEstudiante/reporte';
-	let div = document.getElementById("divdto");
+	let div = document.getElementById("respuesta");
     fetch(endpoint)
     .then(response => {
             return response.json();

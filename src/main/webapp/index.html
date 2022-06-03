@@ -1,87 +1,125 @@
 <!DOCTYPE html>
 <html lang="es-ES">
-	<head>
-		<meta charset="UTF-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<title>Entregable</title>
-	</head>
-	<body>
-	<button id="btnCarreras">Todas las carreras</button>
-	<button id="btnEstudiantes">Todos los estudiantes</button>
-	<div id="respuesta"></div>
-	<h4>Agregar una estudiante:</h4>
-	<form class="formEstudiante">
-		<label>Dni:</label>
-		<input type="number" id="dni" placeholder="Dni" required>
-		<label>Nombre:</label>
-		<input type="text" id="nombre" placeholder="Nombre" required>
-		<label>Apellido:</label>
-		<input type="text" id="apellido" placeholder="Apellido" required>
-		<label>Años:</label>
-		<input type="number" id="anios" placeholder="Edad" required>
-		<label>Género:</label>
-		<input type="text" id="genero" placeholder="Genero" required>
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="style.css">
+	<title>Entregable</title>
+</head>
+
+<body>
+	<div class="conatiner">
+		<div class="cont-forms">
+			<div class="cont-add-estudiante">
+				<h2>Dar de alta un estudiante:</h2>
+				<form class="form-estudiante">
+					<div>
+						<label>Dni:</label><br>
+						<input type="number" id="dni" placeholder="Dni" required>
+					</div>
+					<div>
+						<label>Nombre:</label><br>
+						<input type="text" id="nombre" placeholder="Nombre" required>
+					</div>
+					<div>
+						<label>Apellido:</label><br>
+						<input type="text" id="apellido" placeholder="Apellido" required>
+					</div>
+					<div>
+						<label>Años:</label><br>
+						<input type="number" id="anios" placeholder="Edad" required>
+					</div>
+					<div>
+						<label>Género:</label><br>
+						<input type="text" id="genero" placeholder="Genero" required>
+					</div>
+					<div>
+						<label>Ciudad:</label><br>
+						<input type="text" id="ciudad" placeholder="Ciudad" required>
+					</div>
+					<div>
+						<label>Número de libreta:</label><br>
+						<input type="number" id="nroLibreta" placeholder="Número de libreta" required>
+					</div>
+				</form>
+				<button id="crearEstudiante">Crear</button>
+			</div>
+
+			<div class="cont-add-carrera">
+				<h2>Agregar una nueva carrera:</h2>
+				<form class="form-carrera">
+					<div>
+						<label>Nombre de la carrera:</label><br>
+						<input type="text" id="nombreCarrera" required>
+					</div>
+				</form>
+				<button id="crearCarrera">Crear</button>
+			</div>
+
+			<div class="cont-matr-estudiante">
+				<h2>Matricular un estudiante:</h2>
+				<form class="form-matricular">
+					<div>
+						<select id="carreras">
+							<option selected="true" disabled="disabled">Carrera</option>
+						</select>
+						<select id="estudiantes">
+							<option selected="true" disabled="disabled">Estudiante</option>
+						</select>
+					</div>
+					<div>
+						<label>Año de graduacion:</label><br>
+						<input type="number" id="anioGraduacion">
+					</div>
+					<div>
+						<label>Años de antiguedad</label><br>
+						<input type="number" id="anioAntiguedad">
+					</div>
+					<div>
+						<label>Se graduo?</label><br>
+						<select id="g">
+							<option value="1">Si</option>
+							<option value="0">No</option>
+						</select>
+					</div>
+				</form>
+				<button id="asignar">Asignar</button>
+			</div>
+		</div>
+		
+		<div class="cont-listar">
+			<button id="btnCarreras">Todas las carreras</button>
+			<button id="btnEstudiantes">Todos los estudiantes</button>
+			<button id="btndto">Reporte Dto</button>
+		</div>
+		<div id="respuesta"></div>		
+		
+		<!--
+		<h4>Buscar estudiante por...</h4>
 		<label>Ciudad:</label>
-		<input type="text" id="ciudad" placeholder="Ciudad" required>
-		<label>Número de libreta:</label>
-		<input type="number" id="nroLibreta" placeholder="Número de libreta" required>
-	</form>
-	<button id="crearEstudiante">Crear</button>
-	
-	<h4>Agregar una nueva carrera:</h4>
-	<form method="POST">
-		<label>Nombre de la carrera:</label>
-		<input type="text" id="nombreCarrera" required>
-	</form>
-	<button id="crearCarrera">Crear</button>
-	
-	<h4>Matricular a un estudiante con una carrera:</h4>
-	<form method="POST">
-		<select id="carreras">
-		
-		</select>
-		<select id="estudiantes">
-		
-		</select>
-		<label>Año de graduacion</label>
-		<input type="number" id="anioGraduacion">
-		<label>Años de antiguedad</label>
-		<input type="number" id="anioAntiguedad">
-		<label>Se graduo?</label>
-		<select id="g">
-			<option value="1">Si</option>
-			<option value="0">No</option>
-		</select>
-		 
-	</form>
-	<button id="asignar">Asignar</button>
-	
-	<h4>DTO</h4>
-	<button id="btndto">Reporte</button>
-	<div id="divdto"></div>
-	
-	<h4>Buscar estudiante por...</h4>
-	<label>Ciudad:</label>
-	<input type="text" id="inputciudad" required>
-	<label>ID Carrera:</label>
-	<input type="text" id="inputidcarrera" required>
-	<button id="btnby">Buscar</button>
-	<div id="divbusqueda"></div>
-	
-	<h4>Numero de libreta</h4>
-	<label>Ingrese el numero de libreta: </label>
-	<input type="number" id="inputNroLU" required>
-	<button id="btnBuscarLU">Buscar</button>
-	<div id="divLibreta"></div>
-	<h4>Genero</h4>
-	<label>Seleccione el genero: </label>
-	<select id="generoF">
+		<input type="text" id="inputciudad" required>
+		<label>ID Carrera:</label>
+		<input type="text" id="inputidcarrera" required>
+		<button id="btnby">Buscar</button>
+		<div id="divbusqueda"></div>
+
+		<h4>Numero de libreta</h4>
+		<label>Ingrese el numero de libreta: </label>
+		<input type="number" id="inputNroLU" required>
+		<button id="btnBuscarLU">Buscar</button>
+		<div id="divLibreta"></div>
+		<h4>Genero</h4>
+		<label>Seleccione el genero: </label>
+		<select id="generoF">
 			<option value="mujer">Mujer</option>
 			<option value="hombre">Hombre</option>
-	</select>
-	<button id="btnGenero">Buscar</button>
-	<div id="divGenero"></div>
+		</select>
+		<button id="btnGenero">Buscar</button>
+		<div id="divGenero"></div>
+		-->
+	</div>
+</body>
+<script src="js.js"></script>
 
-	</body>
-	<script src="js.js"></script>
 </html>

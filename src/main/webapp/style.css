@@ -1,0 +1,31 @@
+body {
+    display: flex;
+    justify-content: center;
+}
+
+.conatiner {
+    max-width: 1200px;
+    width: 100%;
+}
+
+.cont-forms {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.cont-add-estudiante, .cont-add-carrera, .cont-matr-estudiante {
+    width: 50%;
+}
+
+.form-estudiante div , .form-carrera div, .form-matricular div{
+    margin-bottom: 10px;
+}
+
+.cont-listar {
+    margin-top: 20px;
+}
+
+#respuesta {
+    margin-top: 20px;
+}
