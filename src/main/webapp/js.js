@@ -37,9 +37,8 @@ btnCarreras.addEventListener("click", () => {
 //---------Metodos---------
 
 function getByGenero(){
-	let div = document.getElementById("resultado");
+	let div = document.getElementById("respuesta");
 	let genero=document.getElementById("generoF").value;
-	div.innerHTML='';
 	let endpoint = url+'estudiantes/genero/'+genero;
 	fetch(endpoint)
     .then(response => {
@@ -56,7 +55,7 @@ function getByGenero(){
 	
 
 function getEstudianteByLU(){
-	let div = document.getElementById("resultado");
+	let div = document.getElementById("respuesta");
 	let inputLibreta=document.getElementById("inputNroLU").value;
 
 	let endpoint = url+'estudiantes/nroLibreta/'+inputLibreta;
@@ -116,8 +115,6 @@ function getbycarrerabyciudad(){
 	let inputCuidad = document.getElementById("inputciudad").value;
 	let endpoint = url+'estudiantes/'+inputCarrera+'/'+inputCuidad;
 	
-	
-	
 	fetch(endpoint)
     .then(response => {
             return response.json();
@@ -146,7 +143,7 @@ function getEstudiantes() {
 
 function listar(array){
 	let respuesta = document.getElementById("respuesta");
-	respuesta.innerHTML = '';
+	respuesta.innerHTML = "";
 	
 	for(let item of array) {
        	respuesta.innerHTML += 
@@ -155,8 +152,8 @@ function listar(array){
 }
 
 function rellenarSelects(carreras, estudiantes){
-	selectCarreras.innerHTML = '';
-	selectEstudiantes.innerHTML = '';
+	selectCarreras.innerHTML = "";
+	selectEstudiantes.innerHTML = "";
 	for(let item of carreras) {
        	selectCarreras.innerHTML += 
   		`<option value="${item.idCarrera}">${item.nombre}</option>`;
