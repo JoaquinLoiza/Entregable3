@@ -93,6 +93,7 @@ function reporte() {
             return response.json();
     }).then(r => {
         if(r != null){
+		div.innerHTML = "";
 			for (let item of r) {
 				div.innerHTML += `<li> Carrera = ${item.c.nombre}</li>`;
 				div.innerHTML += `<p>Inscriptos = `;
